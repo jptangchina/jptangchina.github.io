@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>鹏徙南暝的博客</title>
+  
+  <subtitle>拾繁星，积跬步，成大器</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://www.jptangchina.com/"/>
+  <updated>2019-05-08T09:49:14.000Z</updated>
+  <id>http://www.jptangchina.com/</id>
+  
+  <author>
+    <name>鹏徙南暝</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="http://www.jptangchina.com/2019/05/08/hello-world/"/>
+    <id>http://www.jptangchina.com/2019/05/08/hello-world/</id>
+    <published>2019-05-08T09:49:14.000Z</published>
+    <updated>2019-05-08T09:49:14.000Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+</feed>
