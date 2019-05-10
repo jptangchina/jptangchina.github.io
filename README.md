@@ -1,6 +1,3 @@
----
-layout: false
----
 # 我的个人博客
 
 https://www.jptangchina.com
