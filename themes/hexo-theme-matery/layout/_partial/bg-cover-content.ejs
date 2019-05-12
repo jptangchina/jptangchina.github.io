@@ -21,5 +21,10 @@
 </div>
 <script>
 // 每天切换 banner 图.  Switch banner image every day.
+//$('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay() + '.jpg)');
+<%if(theme.imageHosting.enable)  { %>
+$('.bg-cover').css('background-image', 'url(<%= theme.imageHosting.images[new Date().getDay()] %>)');
+<% } else {  %>
 $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay() + '.jpg)');
+<% } %>
 </script>
