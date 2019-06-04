@@ -343,10 +343,10 @@ java版本：1.8
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h1><p>SpringBoot版本：2.1.4.RELEASE</p>
+                <h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>SpringBoot版本：2.1.4.RELEASE</p>
 <p>java版本：1.8</p>
 <p>文中所说JPA皆指spring-boot-starter-data-jpa</p>
-<h1 id="使用JPA保存一个Student对象"><a href="#使用JPA保存一个Student对象" class="headerlink" title="使用JPA保存一个Student对象"></a>使用JPA保存一个Student对象</h1><p>在JPA中保存一个对象，仅需要该对象，一个仓储即可。<br>StudentDO实体类：</p>
+<h2 id="使用JPA保存一个Student对象"><a href="#使用JPA保存一个Student对象" class="headerlink" title="使用JPA保存一个Student对象"></a>使用JPA保存一个Student对象</h2><p>在JPA中保存一个对象，仅需要该对象，一个仓储即可。<br>StudentDO实体类：</p>
 <pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Getter</span>
 <span class="token annotation punctuation">@Setter</span>
 <span class="token annotation punctuation">@Entity</span>
@@ -380,7 +380,7 @@ java版本：1.8
         Assert<span class="token punctuation">.</span><span class="token function">assertNotNull</span><span class="token punctuation">(</span>student<span class="token punctuation">.</span><span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 </code></pre>
-<h1 id="在插入过程中使用mysql函数"><a href="#在插入过程中使用mysql函数" class="headerlink" title="在插入过程中使用mysql函数"></a>在插入过程中使用mysql函数</h1><p>如果我们希望student的seq值由系统自动生成，且生成规则为“yyMMdd + 8位自增序列”（例如19060310000000）又该如何实现呢？</p>
+<h2 id="在插入过程中使用mysql函数"><a href="#在插入过程中使用mysql函数" class="headerlink" title="在插入过程中使用mysql函数"></a>在插入过程中使用mysql函数</h2><p>如果我们希望student的seq值由系统自动生成，且生成规则为“yyMMdd + 8位自增序列”（例如19060310000000）又该如何实现呢？</p>
 <p>首先想到的是该如何生成这一串序列，mysql不像oracle自身支持sequence，因此在这里可以借用函数以及额外的sequence表来实现这一操作，网上有很多实现方式，这里就不再赘述。</p>
 <p>现在已经有了函数getseq(‘student_seq’)可以获取到该序列，该如何将其应用到保存对象的方法中？显然的一个问题是，像上面那样再直接调用save方法已经行不通了，应该得需要自定义插入的sql实现。</p>
 <p>一个容易想到的办法是，在StudentDO类上使用注解@SQLInsert来定义insert的实现，它写起来应该会像这个样子：</p>
@@ -395,7 +395,7 @@ java版本：1.8
     <span class="token keyword">int</span> <span class="token function">insert</span><span class="token punctuation">(</span><span class="token annotation punctuation">@Param</span><span class="token punctuation">(</span><span class="token string">"student"</span><span class="token punctuation">)</span> StudentDO student<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
 <p>试着运行一下，结果很成功，对象被正常的存储到数据库中，并且seq的取值也正常。看上去我们的问题已经得到了解决，但事实真的如此么？</p>
-<h1 id="自定义的批量存储"><a href="#自定义的批量存储" class="headerlink" title="自定义的批量存储"></a>自定义的批量存储</h1><p>上面的例子中，我们成功通过JPA调用了mysql函数将对象存储到数据库中。但上面的例子只提供了单个保存的方法，如果我们想批量保存呢？@Query里面的sql能够进行改造么？我并没有找到@Query中使用List<object>作为参数的insert方法，但是这并不代表这一操作不能执行。JPA仍旧提供给了使用者原始的使用方式：利用EntityManager来构造sql并执行。</object></p>
+<h2 id="自定义的批量存储"><a href="#自定义的批量存储" class="headerlink" title="自定义的批量存储"></a>自定义的批量存储</h2><p>上面的例子中，我们成功通过JPA调用了mysql函数将对象存储到数据库中。但上面的例子只提供了单个保存的方法，如果我们想批量保存呢？@Query里面的sql能够进行改造么？我并没有找到@Query中使用List<object>作为参数的insert方法，但是这并不代表这一操作不能执行。JPA仍旧提供给了使用者原始的使用方式：利用EntityManager来构造sql并执行。</object></p>
 <pre class=" language-java"><code class="language-java">    <span class="token annotation punctuation">@PersistenceContext</span>
     <span class="token keyword">private</span> EntityManager entityManager<span class="token punctuation">;</span>
 
@@ -420,11 +420,12 @@ java版本：1.8
 <pre class=" language-java"><code class="language-java">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>dao<span class="token punctuation">.</span>InvalidDataAccessApiUsageException<span class="token operator">:</span> Modifying queries can only use <span class="token keyword">void</span> or <span class="token keyword">int</span><span class="token operator">/</span>Integer as <span class="token keyword">return</span> type<span class="token operator">!</span><span class="token punctuation">;</span> nested exception is java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>IllegalArgumentException<span class="token operator">:</span> Modifying queries can only use <span class="token keyword">void</span> or <span class="token keyword">int</span><span class="token operator">/</span>Integer as <span class="token keyword">return</span> type<span class="token operator">!</span>
 </code></pre>
 <p>insert方法必须使用@Modifying进行注解，而@Modifying注解的方法又只能返回int类型的结果。这种情况下或许只能先利用查询得到seq的值再进行操作。</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>对于JPA的使用还不够了解，一些复杂的情况下没有找到最理想的实现方案。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>对于JPA的使用还不够了解，一些复杂的情况下没有找到最理想的实现方案。</p>
 <ol>
 <li>@Query注解中是否能够使用List<object>以及实现动态拼接参数的效果没有得到解决</object></li>
-<li>自定义的sql语句返回持久化对象的问题没有方案<br>在以后的使用了解中希望能够找到解决办法，将问题记录在这里，以便后续查看。</li>
+<li>自定义的sql语句返回持久化对象的问题没有方案</li>
 </ol>
+<p>在以后的使用了解中希望能够找到解决办法，将问题记录在这里，以便后续查看。</p>
 
             </div>
             <hr>
