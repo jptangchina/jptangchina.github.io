@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.jptangchina.com/"/>
-  <updated>2019-06-04T05:20:01.000Z</updated>
+  <updated>2019-06-03T09:55:52.000Z</updated>
   <id>http://www.jptangchina.com/</id>
   
   <author>
@@ -15,24 +15,6 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>test</title>
-    <link href="http://www.jptangchina.com/2019/06/04/test/"/>
-    <id>http://www.jptangchina.com/2019/06/04/test/</id>
-    <published>2019-06-04T05:20:01.000Z</published>
-    <updated>2019-06-04T05:20:01.000Z</updated>
-    
-    <summary type="html">
-    
-    </summary>
-    
-      <category term="java" scheme="http://www.jptangchina.com/categories/java/"/>
-    
-    
-      <category term="java" scheme="http://www.jptangchina.com/tags/java/"/>
-    
-  </entry>
   
   <entry>
     <title>使用SpringBoot JPA进行自定义的保存及批量保存</title>

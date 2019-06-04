@@ -4,31 +4,6 @@
   
     
     <entry>
-      <title>test</title>
-      <link href="/2019/06/04/test/"/>
-      <url>/2019/06/04/test/</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-      
-      <categories>
-          
-          <category> java </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> java </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>使用SpringBoot JPA进行自定义的保存及批量保存</title>
       <link href="/2019/06/03/shi-yong-springboot-jpa-jin-xing-zi-ding-yi-de-bao-cun-ji-pi-liang-bao-cun/"/>
       <url>/2019/06/03/shi-yong-springboot-jpa-jin-xing-zi-ding-yi-de-bao-cun-ji-pi-liang-bao-cun/</url>
