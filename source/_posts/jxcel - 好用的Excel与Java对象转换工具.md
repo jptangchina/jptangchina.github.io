@@ -10,7 +10,7 @@ tags:
   - jxcel
   - excel
 date: 2019-06-13 11:49:52
-updated: 2019-06-13 11:49:52
+updated: 2019-06-14 9:28:52
 ---
 
 ## Jxcel简介
@@ -79,4 +79,5 @@ Student student = new Student(18, 0, "JptangChina", new Date(), "18510010000");
 JxcelGenrator.xlsxGenrator().generateFile(Arrays.asList(student), "/home/jptangchina/test.xlsx");
 ```
 输出的表格如下：
-![](https://s2.ax1x.com/2019/06/13/VhQwge.jpg)
+
+![](https://s2.ax1x.com/2019/06/14/V4Zy8J.jpg)
