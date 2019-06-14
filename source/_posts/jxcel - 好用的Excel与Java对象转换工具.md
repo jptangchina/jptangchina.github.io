@@ -41,6 +41,7 @@ Jxcel是一个支持Java对象与Excel（目前仅xlsx、xls）互相转换的�
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @JxcelSheet("学生名单")
 class Student {
     @JxcelCell("年龄")
