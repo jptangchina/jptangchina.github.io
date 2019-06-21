@@ -43,7 +43,7 @@ JPA仓储：
 
 ```java
 @Repository
-public interface StudentRepo extends JpaRepository<StudentDO, String> {
+public interface StudentRepo extends JpaRepository<StudentDO, Long> {
 }
 ```
 一般的，我们只需要调用StudentRepo.save()方法即可完成对实体对象的保存操作。
