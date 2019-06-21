@@ -366,7 +366,7 @@ java版本：1.8
 </code></pre>
 <p>JPA仓储：</p>
 <pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Repository</span>
-<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">StudentRepo</span> <span class="token keyword">extends</span> <span class="token class-name">JpaRepository</span><span class="token operator">&lt;</span>StudentDO<span class="token punctuation">,</span> String<span class="token operator">></span> <span class="token punctuation">{</span>
+<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">StudentRepo</span> <span class="token keyword">extends</span> <span class="token class-name">JpaRepository</span><span class="token operator">&lt;</span>StudentDO<span class="token punctuation">,</span> Long<span class="token operator">></span> <span class="token punctuation">{</span>
 <span class="token punctuation">}</span>
 </code></pre>
 <p>一般的，我们只需要调用StudentRepo.save()方法即可完成对实体对象的保存操作。</p>
