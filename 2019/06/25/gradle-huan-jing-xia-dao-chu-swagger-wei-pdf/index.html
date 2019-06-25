@@ -354,7 +354,7 @@
 <li>asciidoctor</li>
 <li>spring-restdocs-mockmvc</li>
 </ul>
-<h2 id="准备Swagger数据"><a href="#准备Swagger数据" class="headerlink" title="准备Swagger数据"></a>准备Swagger数据</h2><p>SpringBoot中使用Swagger的过程就不再赘述了，下面试本文使用的范例：</p>
+<h2 id="准备Swagger数据"><a href="#准备Swagger数据" class="headerlink" title="准备Swagger数据"></a>准备Swagger数据</h2><p>SpringBoot中使用Swagger的过程就不再赘述了，下面是本文使用的范例：</p>
 <pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@Configuration</span>
 <span class="token annotation punctuation">@EnableSwagger2</span>
 <span class="token keyword">class</span> <span class="token class-name">SwaggerConfig</span> <span class="token punctuation">{</span>
@@ -468,13 +468,14 @@ convertSwagger2markup <span class="token punctuation">{</span>
 apply plugin<span class="token operator">:</span> <span class="token string">'org.asciidoctor.convert'</span>
 </code></pre>
 <p><strong>手动编写</strong>index.adoc文件，放置到${asciiDocOutputDir.absolutePath}中：</p>
-<pre><code>// {generated}默认值为${build}/asciidoc
-// 参见：https://github.com/Swagger2Markup/swagger2markup-gradle-project-template
-include::{generated}/overview.adoc[]
+<pre><code>include::{generated}/overview.adoc[]
 include::{generated}/paths.adoc[]
 include::{generated}/definitions.adoc[]
 include::{generated}/security.adoc[]
-</code></pre><p>配置asciidoctor：</p>
+</code></pre><blockquote>
+<p>{generated}默认值为${build}/asciidoc，参见：<a href="https://github.com/Swagger2Markup/swagger2markup-gradle-project-template" target="_blank" rel="noopener">https://github.com/Swagger2Markup/swagger2markup-gradle-project-template</a></p>
+</blockquote>
+<p>配置asciidoctor：</p>
 <pre class=" language-java"><code class="language-java">asciidoctor <span class="token punctuation">{</span>
     dependsOn convertSwagger2markup
     <span class="token comment" spellcheck="true">// sourceDir中需要包含有之前手动编写的index.adoc文件</span>
@@ -639,10 +640,19 @@ task <span class="token function">genPdf</span><span class="token punctuation">(
 <blockquote>
 <p>有兴趣的读者可以阅读下toFile方法的源码，里面对第一种方法生成的4个文件进行了整合，这也是不再需要手动编写index.adoc文件的原因。</p>
 </blockquote>
-<h3 id="3-配置asciidoctorPdf"><a href="#3-配置asciidoctorPdf" class="headerlink" title="3. 配置asciidoctorPdf"></a>3. 配置asciidoctorPdf</h3><pre class=" language-java"><code class="language-java">pdfThemes <span class="token punctuation">{</span>
+<h3 id="3-配置asciidoctorPdf"><a href="#3-配置asciidoctorPdf" class="headerlink" title="3. 配置asciidoctorPdf"></a>3. 配置asciidoctorPdf</h3><pre class=" language-java"><code class="language-java">
+ext <span class="token punctuation">{</span>
+    asciiDocOutputDir <span class="token operator">=</span> <span class="token function">file</span><span class="token punctuation">(</span><span class="token string">"${buildDir}/asciidoc"</span><span class="token punctuation">)</span>
+    <span class="token comment" spellcheck="true">// 创建字体与主题的文件夹</span>
+    pdfFontsDir <span class="token operator">=</span> <span class="token function">file</span><span class="token punctuation">(</span><span class="token string">"${buildDir}/fonts"</span><span class="token punctuation">)</span>
+    pdfThemesDir <span class="token operator">=</span> <span class="token function">file</span><span class="token punctuation">(</span><span class="token string">"${buildDir}/themes"</span><span class="token punctuation">)</span>
+    swaggerVersion <span class="token operator">=</span> <span class="token string">'2.9.2'</span>
+<span class="token punctuation">}</span>
+
+pdfThemes <span class="token punctuation">{</span>
     local <span class="token string">'basic'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
         styleDir <span class="token operator">=</span> pdfThemesDir
-        <span class="token comment" spellcheck="true">// styleName 会被程序用于匹配${styleName}-theme.yml，例如default-styleName-theme.yml</span>
+        <span class="token comment" spellcheck="true">// styleName会被程序用于匹配${styleName}-theme.yml，如default-styleName-theme.yml</span>
         styleName <span class="token operator">=</span> <span class="token string">'default'</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
@@ -659,7 +669,7 @@ asciidoctorPdf<span class="token punctuation">{</span>
 <p>本文字体与主题文件均来自于<code>asciidoctorj-pdf-1.5.0-alpha.18.jar</code>源码包，其路径位于：gems/asciidoctorj-pdf-1.5.0-alpha.18/data</p>
 </blockquote>
 <h3 id="4-复制并修改default-theme-yml文件配置"><a href="#4-复制并修改default-theme-yml文件配置" class="headerlink" title="4. 复制并修改default-theme.yml文件配置"></a>4. 复制并修改default-theme.yml文件配置</h3><p>为了解决中文无法显示的问题，首先需要自行下载一个支持中文的字体文件。</p>
-<p>修改主题文件，将mplus1p-regular-fallback.ttf替换为自己下载的字体文件的名称</p>
+<p>修改主题文件，将mplus1p-regular-fallback.ttf替换为自己下载的字体文件的名称。</p>
 <pre class=" language-yml"><code class="language-yml">M+ 1p Fallback:
   normal: your-font.ttf
   bold: your-font.ttf
