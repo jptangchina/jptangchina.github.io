@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.jptangchina.com/"/>
-  <updated>2019-06-25T06:14:50.000Z</updated>
+  <updated>2019-08-19T05:53:29.000Z</updated>
   <id>http://www.jptangchina.com/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>JPA映射数据到非Entity对象的几种方式</title>
+    <link href="http://www.jptangchina.com/2019/08/19/jpa-ying-she-shu-ju-dao-fei-entity-dui-xiang-de-ji-chong-fang-shi/"/>
+    <id>http://www.jptangchina.com/2019/08/19/jpa-ying-she-shu-ju-dao-fei-entity-dui-xiang-de-ji-chong-fang-shi/</id>
+    <published>2019-08-19T05:53:29.000Z</published>
+    <updated>2019-08-19T05:53:29.000Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;1-说明&quot;&gt;&lt;a href=&quot;#1-说明&quot; class=&quot;headerlink&quot; title=&quot;1 说明&quot;&gt;&lt;/a&gt;1 说明&lt;/h2&gt;&lt;p&gt;本文基于SpringBoot
+        
+      
+    
+    </summary>
+    
+      <category term="java" scheme="http://www.jptangchina.com/categories/java/"/>
+    
+    
+      <category term="java" scheme="http://www.jptangchina.com/tags/java/"/>
+    
+      <category term="jpa" scheme="http://www.jptangchina.com/tags/jpa/"/>
+    
+      <category term="数据映射" scheme="http://www.jptangchina.com/tags/%E6%95%B0%E6%8D%AE%E6%98%A0%E5%B0%84/"/>
+    
+  </entry>
   
   <entry>
     <title>Gradle环境下导出Swagger为PDF</title>
