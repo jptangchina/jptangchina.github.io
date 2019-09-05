@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="keywords" content="国内环境本地搭建Minikube, java">
     <meta name="description" content="说明本文中Minikube版本为v1.3.1，Docker版本为19.03.1，VirtualBox版本为6.0.8 r130520 (Qt5.6.3)。
-由于一些众所周知的原因，在使用默认配置搭建Minikube环境时，因为无法拉取镜像等">
+本文主要说明如何解决拉取镜像失败的问题，至于其他安装步骤，官方教程已经说明的非常详细">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -338,6 +338,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>本文中Minikube版本为v1.3.1，Docker版本为19.03.1，VirtualBox版本为6.0.8 r130520 (Qt5.6.3)。</p>
+<p>本文主要说明如何解决拉取镜像失败的问题，至于其他安装步骤，<a href="https://minikube.sigs.k8s.io/docs/start/" target="_blank" rel="noopener">官方教程</a>已经说明的非常详细，此处不再赘述。</p>
 <p>由于一些众所周知的原因，在使用默认配置搭建Minikube环境时，因为无法拉取镜像等问题而导致失败。本文主要通过使用阿里镜像进行替换操作。</p>
 <h2 id="来自某度的解决方案"><a href="#来自某度的解决方案" class="headerlink" title="来自某度的解决方案"></a>来自某度的解决方案</h2><p>如果在某度上搜索，大部分的解答可能都是手动从阿里镜像仓库拉取，缺什么拉什么，然后对Image镜像重新tag。包括最近在看的《重新定义Spring Cloud实战》一书中也是使用此方式解决。但在最新版本环境下，可能有如下镜像需要手动拉取：</p>
 <pre><code>k8s.gcr.io/kube-proxy                v1.15.2
@@ -574,7 +575,7 @@ k8s.gcr.io/pause                     3.1
                 </a>
                 <div class="card-content article-content">
                     <div class="summary">说明本文中Minikube版本为v1.3.1，Docker版本为19.03.1，VirtualBox版本为6.0.8 r130520 (Qt5.6.3)。
-由于一些众所周知的原因，在使用默认配置搭建Minikube环境时，因为无法拉取镜像等</div>
+本文主要说明如何解决拉取镜像失败的问题，至于其他安装步骤，官方教程已经说明的非常详细</div>
                     <div class="publish-info">
                             <span class="publish-date">
                                 <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-05
@@ -614,27 +615,28 @@ k8s.gcr.io/pause                     3.1
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/08/19/jpa-ying-she-shu-ju-dao-fei-entity-dui-xiang-de-ji-chong-fang-shi/">
+                <a href="/2019/08/25/springcloud-wei-fu-wu-clientexception-load-balancer-does-not-have-available-server-for-client-yi-chang-jie-jue-fang-an/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="JPA映射数据到非Entity对象的几种方式">
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="SpringCloud微服务ClientException:Load balancer does not have available server for client异常解决方案">
                         
-                        <span class="card-title">JPA映射数据到非Entity对象的几种方式</span>
+                        <span class="card-title">SpringCloud微服务ClientException:Load balancer does not have available server for client异常解决方案</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
-                    <div class="summary">1 说明本文基于SpringBoot 2.1.7.RELEASE（spring-data-jpa版本：2.1.10.RELEASE）撰写，低版本jpa中的方法可能与最新版中的方法差异较大，但总体思路没有太大变化。文中观点皆为个人观点，如有错</div>
+                    <div class="summary">遇到的问题最近在使用最新版本的SpringCloud编写demo时发现的问题。使用Feign在进行服务间调用时，会提示异常：
+ClientException:Load balancer does not have available ser</div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-08-19
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-08-25
                             </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/java/" class="post-category" target="_blank">
-                                    java
+                            <a href="/categories/微服务/" class="post-category" target="_blank">
+                                    微服务
                                 </a>
                             
                             
@@ -644,16 +646,20 @@ k8s.gcr.io/pause                     3.1
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/java/" target="_blank">
-                        <span class="chip bg-color">java</span>
+                    <a href="/tags/SpringCloud/" target="_blank">
+                        <span class="chip bg-color">SpringCloud</span>
                     </a>
                     
-                    <a href="/tags/jpa/" target="_blank">
-                        <span class="chip bg-color">jpa</span>
+                    <a href="/tags/SpringBoot/" target="_blank">
+                        <span class="chip bg-color">SpringBoot</span>
                     </a>
                     
-                    <a href="/tags/数据映射/" target="_blank">
-                        <span class="chip bg-color">数据映射</span>
+                    <a href="/tags/ribbon/" target="_blank">
+                        <span class="chip bg-color">ribbon</span>
+                    </a>
+                    
+                    <a href="/tags/feign/" target="_blank">
+                        <span class="chip bg-color">feign</span>
                     </a>
                     
                 </div>
