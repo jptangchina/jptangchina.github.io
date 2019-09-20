@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.jptangchina.com/"/>
-  <updated>2019-09-05T01:48:38.000Z</updated>
+  <updated>2019-09-20T00:51:30.000Z</updated>
   <id>http://www.jptangchina.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>记一次升级SpringCloud Gateway路由转发的问题</title>
+    <link href="http://www.jptangchina.com/2019/09/20/ji-yi-ci-sheng-ji-springcloud-gateway-lu-you-zhuan-fa-de-wen-ti/"/>
+    <id>http://www.jptangchina.com/2019/09/20/ji-yi-ci-sheng-ji-springcloud-gateway-lu-you-zhuan-fa-de-wen-ti/</id>
+    <published>2019-09-20T00:51:30.000Z</published>
+    <updated>2019-09-20T00:51:30.000Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;说明&quot;&gt;&lt;a href=&quot;#说明&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="微服务" scheme="http://www.jptangchina.com/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"/>
+    
+    
+      <category term="SpringCloud" scheme="http://www.jptangchina.com/tags/SpringCloud/"/>
+    
+      <category term="Gateway" scheme="http://www.jptangchina.com/tags/Gateway/"/>
+    
+  </entry>
   
   <entry>
     <title>国内环境本地搭建Minikube</title>
