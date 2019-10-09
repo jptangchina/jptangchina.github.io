@@ -4,11 +4,9 @@
 
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="记一次升级SpringCloud Gateway路由转发的问题, java">
-    <meta name="description" content="说明本文中使用的SpringBoot版本：2.1.7.RELEASE，SpringCloud依赖版本：Greenwich.SR3。
-问题描述在配置一个简单的路由转发时，同样的配置，转发到了不同的路径。配置如下：
-spring:
-  clou">
+    <meta name="keywords" content="Go语言中的标识符可见性, java">
+    <meta name="description" content="Go语言中的标识符可见性Go语言中变量首字母大写，代表其对其他包可见，反之代表不可见。具体到实际使用中，有如下一些体现。
+1. 同包的可见性同一个包内代码的标识符始终具有可见性。例如在main包下面有两个go文件，分别为computer.g">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -16,7 +14,7 @@ spring:
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>记一次升级SpringCloud Gateway路由转发的问题 | 鹏徙南冥的博客</title>
+    <title>Go语言中的标识符可见性 | 鹏徙南冥的博客</title>
     <link rel="icon" type="image/x-icon, image/vnd.microsoft.icon" href="/favicon.ico">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -183,13 +181,13 @@ spring:
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        记一次升级SpringCloud Gateway路由转发的问题
+                        Go语言中的标识符可见性
                     </div>
                 </div>
             </div>
@@ -300,12 +298,8 @@ spring:
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/SpringCloud/" target="_blank">
-                                <span class="chip bg-color">SpringCloud</span>
-                            </a>
-                        
-                            <a href="/tags/Gateway/" target="_blank">
-                                <span class="chip bg-color">Gateway</span>
+                            <a href="/tags/Golang/" target="_blank">
+                                <span class="chip bg-color">Golang</span>
                             </a>
                         
                     </div>
@@ -316,8 +310,8 @@ spring:
                     <div class="post-cate">
                         <i class="fa fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/微服务/" class="post-category" target="_blank">
-                                微服务
+                            <a href="/categories/Golang/" class="post-category" target="_blank">
+                                Golang
                             </a>
                         
                     </div>
@@ -328,7 +322,7 @@ spring:
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-09-20
+                    2019-10-09
                 </div>
 
                 
@@ -339,68 +333,116 @@ spring:
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>本文中使用的SpringBoot版本：2.1.7.RELEASE，SpringCloud依赖版本：Greenwich.SR3。</p>
-<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>在配置一个简单的路由转发时，同样的配置，转发到了不同的路径。配置如下：</p>
-<pre class=" language-yml"><code class="language-yml">spring:
-  cloud:
-    gateway:
-      routes:
-        - id: baidu_route
-          uri: https://baidu.com:443/
-          predicates:
-            - Path=/baidu
-</code></pre>
-<p>目的是想当访问localhost:8080时，跳转到<code>https://baidu.com</code>。但是升级了SpringCloud版本后，实际却是跳转到了<code>https://baidu.com/baidu</code>。并且莫名其妙的使用浏览器访问不进入断点，使用Postman发请求确可以进入，很奇怪。</p>
-<h2 id="问题原因"><a href="#问题原因" class="headerlink" title="问题原因"></a>问题原因</h2><p>首先回顾下SpringCloud Gateway的工作原理图：<br><img src="https://s2.ax1x.com/2019/09/20/nObDL4.png" alt="SpringCloud Gateway 工作原理"><br>从图上可以得知，在进入执行过滤器之前，需要做路由匹配，所以理论上不会在执行过滤器之前就已经对路由地址做了修改，处理过程应该发生在Filter Chain中。</p>
-<p>由于本文没有采用任何自定义的Filter，因此图中执行的Filter都是GlobalFilters。可以通过Debug或者集成actuator的方式，查看具体执行了哪些Filter：</p>
-<pre class=" language-json"><code class="language-json"><span class="token punctuation">{</span>
-<span class="token property">"org.springframework.cloud.gateway.filter.AdaptCachedBodyGlobalFilter@303c55fa"</span><span class="token operator">:</span>-<span class="token number">2147482648</span><span class="token punctuation">,</span>
-<span class="token property">"org.springframework.cloud.gateway.config.GatewayNoLoadBalancerClientAutoConfiguration$NoLoadBalancerClientFilter@1319bc2a"</span><span class="token operator">:</span><span class="token number">10100</span><span class="token punctuation">,</span>
-<span class="token property">"org.springframework.cloud.gateway.filter.RouteToRequestUrlFilter@b0fd744"</span><span class="token operator">:</span><span class="token number">10000</span><span class="token punctuation">,</span>
-<span class="token property">"org.springframework.cloud.gateway.filter.NettyRoutingFilter@502a4156"</span><span class="token operator">:</span><span class="token number">2147483647</span><span class="token punctuation">,</span>
-<span class="token property">"org.springframework.cloud.gateway.filter.ForwardRoutingFilter@92d1782"</span><span class="token operator">:</span><span class="token number">2147483647</span><span class="token punctuation">,</span>
-<span class="token property">"org.springframework.cloud.gateway.filter.WebsocketRoutingFilter@72976b4"</span><span class="token operator">:</span><span class="token number">2147483646</span><span class="token punctuation">,</span>
-<span class="token property">"org.springframework.cloud.gateway.filter.RemoveCachedBodyFilter@64e1377c"</span><span class="token operator">:</span>-<span class="token number">2147483648</span><span class="token punctuation">,</span>
-<span class="token property">"org.springframework.cloud.gateway.filter.NettyWriteResponseFilter@5416f8db"</span><span class="token operator">:</span>-<span class="token number">1</span><span class="token punctuation">,</span>
-<span class="token property">"org.springframework.cloud.gateway.filter.ForwardPathFilter@6a1ef65c"</span><span class="token operator">:</span><span class="token number">0</span><span class="token punctuation">,</span>
-<span class="token property">"org.springframework.cloud.gateway.filter.GatewayMetricsFilter@726934e2"</span><span class="token operator">:</span><span class="token number">0</span>
+                <h2 id="Go语言中的标识符可见性"><a href="#Go语言中的标识符可见性" class="headerlink" title="Go语言中的标识符可见性"></a>Go语言中的标识符可见性</h2><p>Go语言中变量首字母大写，代表其对其他包可见，反之代表不可见。具体到实际使用中，有如下一些体现。</p>
+<h3 id="1-同包的可见性"><a href="#1-同包的可见性" class="headerlink" title="1. 同包的可见性"></a>1. 同包的可见性</h3><p>同一个包内代码的标识符始终具有可见性。例如在<code>main</code>包下面有两个go文件，分别为<code>computer.go</code>与<code>mian.go</code>，代码分别如下：</p>
+<pre class=" language-go"><code class="language-go"><span class="token comment" spellcheck="true">// computer.go</span>
+<span class="token keyword">package</span> main
+
+<span class="token keyword">type</span> computer <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+    brand <span class="token builtin">string</span>
 <span class="token punctuation">}</span>
 </code></pre>
-<p>按照执行顺序从后往前打断点发现，对于URI的处理主要发生在RouteToRequestUrlFilter中。对比新旧版本的代码可以发现，最新版的代码中有这样一段代码：</p>
-<pre class=" language-java"><code class="language-java">URI mergedUrl <span class="token operator">=</span> UriComponentsBuilder<span class="token punctuation">.</span><span class="token function">fromUri</span><span class="token punctuation">(</span>uri<span class="token punctuation">)</span>
-        <span class="token punctuation">.</span><span class="token function">scheme</span><span class="token punctuation">(</span>routeUri<span class="token punctuation">.</span><span class="token function">getScheme</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">host</span><span class="token punctuation">(</span>routeUri<span class="token punctuation">.</span><span class="token function">getHost</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-        <span class="token punctuation">.</span><span class="token function">port</span><span class="token punctuation">(</span>routeUri<span class="token punctuation">.</span><span class="token function">getPort</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span>encoded<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toUri</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-exchange<span class="token punctuation">.</span><span class="token function">getAttributes</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>GATEWAY_REQUEST_URL_ATTR<span class="token punctuation">,</span> mergedUrl<span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre>
-<p>而与之对应的旧版本中代码如下：</p>
-<pre class=" language-java"><code class="language-java">URI mergedUrl <span class="token operator">=</span> UriComponentsBuilder<span class="token punctuation">.</span><span class="token function">fromUri</span><span class="token punctuation">(</span>uri<span class="token punctuation">)</span>
-        <span class="token punctuation">.</span><span class="token function">uri</span><span class="token punctuation">(</span>routeUri<span class="token punctuation">)</span><span class="token punctuation">;</span>
-exchange<span class="token punctuation">.</span><span class="token function">getAttributes</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>GATEWAY_REQUEST_URL_ATTR<span class="token punctuation">,</span> mergedUrl<span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre>
-<p>其中参数uri为配置文件中predicates的Path路径，routeUri为配置文件中的uri参数。由此可见，在旧版本代码中，重定向的地址即为配置文件的uri，而在新版本中，将Path与uri进行了整合。至此，真相大白。</p>
-<h2 id="修改处理"><a href="#修改处理" class="headerlink" title="修改处理"></a>修改处理</h2><p>如果在实际的情况中，确实有这么一种情况：重定向的URI与原始访问的URI路由不一致，该怎么解决呢？<br>首先想到的是查看是否能够排除部分默认执行的GlobalFilter，很遗憾我并没有找到相关配置。并且查看Bean加载过程可以发现，只有部分GlobalFilter与依赖类有关，大部分都是不依赖于任何配置加载的。此部分源码位于<code>GatewayAutoConfiguration</code>类中，有兴趣的同学可以自行查看。</p>
-<p>既然无法排除，那第二个办法就是采用自定义的Filter进行处理。在本例中，可以在<code>RouteToRequestUrlFilter</code>执行之前手动将Path置空或者在其之后重新处理URI，关键代码分别如下：</p>
-<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// 置空Path</span>
-log<span class="token punctuation">.</span><span class="token function">trace</span><span class="token punctuation">(</span><span class="token string">"MyFilter start"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-exchange <span class="token operator">=</span> exchange<span class="token punctuation">.</span><span class="token function">mutate</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-        <span class="token punctuation">.</span><span class="token function">request</span><span class="token punctuation">(</span>exchange<span class="token punctuation">.</span><span class="token function">getRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">mutate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">path</span><span class="token punctuation">(</span><span class="token string">"/"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-        <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">return</span> chain<span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>exchange<span class="token punctuation">)</span><span class="token punctuation">;</span>
-</code></pre>
-<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// 重新处理URI</span>
-Route route <span class="token operator">=</span> exchange<span class="token punctuation">.</span><span class="token function">getAttribute</span><span class="token punctuation">(</span>GATEWAY_ROUTE_ATTR<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">if</span> <span class="token punctuation">(</span>route <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> chain<span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>exchange<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<pre class=" language-go"><code class="language-go"><span class="token comment" spellcheck="true">// main.go</span>
+<span class="token keyword">package</span> main
+
+<span class="token keyword">import</span> <span class="token string">"fmt"</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    computer <span class="token operator">:=</span> computer<span class="token punctuation">{</span><span class="token string">"华硕"</span><span class="token punctuation">}</span>
+    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>computer<span class="token punctuation">.</span>brand<span class="token punctuation">)</span>
 <span class="token punctuation">}</span>
-log<span class="token punctuation">.</span><span class="token function">trace</span><span class="token punctuation">(</span><span class="token string">"MyFilter start"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-URI uri <span class="token operator">=</span> exchange<span class="token punctuation">.</span><span class="token function">getRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getURI</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">boolean</span> encoded <span class="token operator">=</span> <span class="token function">containsEncodedParts</span><span class="token punctuation">(</span>uri<span class="token punctuation">)</span><span class="token punctuation">;</span>
-URI routeUri <span class="token operator">=</span> route<span class="token punctuation">.</span><span class="token function">getUri</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-URI mergedUrl <span class="token operator">=</span> UriComponentsBuilder<span class="token punctuation">.</span><span class="token function">fromUri</span><span class="token punctuation">(</span>routeUri<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span>encoded<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toUri</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-exchange<span class="token punctuation">.</span><span class="token function">getAttributes</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>GATEWAY_REQUEST_URL_ATTR<span class="token punctuation">,</span> mergedUrl<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">return</span> chain<span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>exchange<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre>
-<p>当然针对具体情况具体分析，这里只是提供一种思路。或许还有其他的方式可以做到，这里我也没有读完官方的全部文档（看得脑壳痛）。</p>
+<p>上述代码的目的是打印出电脑的品牌信息，测试执行不会有任何问题，可见同包下的变量是始终可见的。</p>
+<h3 id="2-不同包的可见性"><a href="#2-不同包的可见性" class="headerlink" title="2. 不同包的可见性"></a>2. 不同包的可见性</h3><p>现在，将<strong>1</strong>中代码的computer.go转移至computer包下，代码如下：</p>
+<pre class=" language-go"><code class="language-go"><span class="token comment" spellcheck="true">// computer.go</span>
+<span class="token keyword">package</span> computer
+
+<span class="token keyword">type</span> computer <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+    brand <span class="token builtin">string</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>此时即便是<code>main.go</code>文件中引入了computer包也无法使用computer结构及其属性，编译器提示<code>Unexported type &#39;computer&#39; usage</code>异常，因为此处computer及其属性都没有大写首字母，因此无法再被访问，修改后的代码应该如下：</p>
+<pre class=" language-go"><code class="language-go"><span class="token comment" spellcheck="true">// computer.go</span>
+<span class="token keyword">package</span> computer
+
+<span class="token keyword">type</span> Computer <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+    Brand <span class="token builtin">string</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<pre class=" language-go"><code class="language-go"><span class="token comment" spellcheck="true">// main.go</span>
+<span class="token keyword">package</span> main
+
+<span class="token keyword">import</span> <span class="token punctuation">(</span>
+    <span class="token string">"fmt"</span>
+    <span class="token string">"tests/computer"</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    computer <span class="token operator">:=</span> computer<span class="token punctuation">.</span>Computer<span class="token punctuation">{</span><span class="token string">"华硕"</span><span class="token punctuation">}</span>
+    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>computer<span class="token punctuation">.</span>Brand<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>事实上，还可以在<code>computer.go</code>中创建工厂函数返回computer对象，并且computer对象及其属性并不需要暴露出去，代码如下：</p>
+<pre class=" language-go"><code class="language-go"><span class="token comment" spellcheck="true">//computer.go</span>
+<span class="token keyword">package</span> computer
+
+<span class="token keyword">type</span> computer <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+    brand <span class="token builtin">string</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">New</span><span class="token punctuation">(</span>brand <span class="token builtin">string</span><span class="token punctuation">)</span> computer <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> computer<span class="token punctuation">{</span>brand<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>尽管这样做编译并没有问题，但是在main函数中实际仍不能通过computer.brand获取computer的值，对于属性而言，这里的<code>brand</code>仍旧需要对外暴露。同时需要注意的是，此种写法IDE会有警告：<code>Exported function with unexported type</code>。</p>
+<p>这里其实主要思考的是这样一个问题：为什么没有暴露的对象可以在其他类中被获取到？</p>
+<p>对比Java语言，其实效果是一样的，对于包内可见的类与属性，虽然可以通过其他类获取到，但是仍然不能调用类中的方法对类进行操作。</p>
+<p>按照<code>《Go语言实战（中文版）》</code>一书中给出的解释是，要让这个行为可行，需要满足两个条件：</p>
+<blockquote>
+<p>第一，公开或者未公开的标识符，不是一个值</p>
+<p>第二，短变量声明操作符，有能力捕获引用的类型，并创建一个未公开的类型的变量。</p>
+<p>永远不能显示创建一个未公开的变量，不过短变量声明操作符可以这么做。</p>
+</blockquote>
+<h3 id="3-内嵌对象的可见性"><a href="#3-内嵌对象的可见性" class="headerlink" title="3. 内嵌对象的可见性"></a>3. 内嵌对象的可见性</h3><p>内嵌对象如果本身可见，那跟之前的描述差不多，就不再赘述。这里主要描述下内嵌对象本身不可见的情况。例如，在上述<code>computer</code>结构中增加一个类型为<code>screen</code>的结构：</p>
+<pre class=" language-go"><code class="language-go"><span class="token comment" spellcheck="true">// computer.go</span>
+<span class="token keyword">package</span> computer
+
+<span class="token keyword">type</span> Computer <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+    screen
+    Brand <span class="token builtin">string</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">type</span> screen <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+    Brand <span class="token builtin">string</span>
+    Size <span class="token builtin">int</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>这里的screen是没有对外暴露的，也就是说，我们不能像下面这样来初始化一个computer对象：</p>
+<pre class=" language-go"><code class="language-go">    computer <span class="token operator">:=</span> computer<span class="token punctuation">.</span>Computer <span class="token punctuation">{</span>
+        Brand<span class="token punctuation">:</span> <span class="token string">"华硕"</span><span class="token punctuation">,</span>
+        screen<span class="token punctuation">:</span> computer<span class="token punctuation">.</span>screen <span class="token punctuation">{</span>
+            Size<span class="token punctuation">:</span> <span class="token number">24</span><span class="token punctuation">,</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span>
+</code></pre>
+<p>但是利用Go语言的特性，尽管screen本身没有对外暴露，但是其属性却以对外暴露的形式被提升到了computer中，所以可以这样对其赋值：</p>
+<pre class=" language-go"><code class="language-go"><span class="token keyword">package</span> main
+
+<span class="token keyword">import</span> <span class="token punctuation">(</span>
+    <span class="token string">"fmt"</span>
+    <span class="token string">"tests/computer"</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    computer <span class="token operator">:=</span> computer<span class="token punctuation">.</span>Computer <span class="token punctuation">{</span>
+        Brand<span class="token punctuation">:</span> <span class="token string">"华硕"</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span>
+    computer<span class="token punctuation">.</span>Size <span class="token operator">=</span> <span class="token number">24</span>
+    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>computer<span class="token punctuation">.</span>Size<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>Go语言中通过字母大小写来判定是否可以对外访问。但不可访问不等于不可获取，同样的，结构不可访问不等于属性不可访问，在实际使用中需要仔细甄别。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>《Go语言实战》</p>
 
             </div>
             <hr>
@@ -548,7 +590,7 @@ exchange<span class="token punctuation">.</span><span class="token function">get
                     </span>
                     <a href="http://www.jptangchina.com" class="b-link-green">鹏徙南冥的博客</a>
                     <i class="fa fa-angle-right fa-lg fa-fw text-color"></i>
-                    <a href="/2019/09/20/ji-yi-ci-sheng-ji-springcloud-gateway-lu-you-zhuan-fa-de-wen-ti/" class="b-link-green">记一次升级SpringCloud Gateway路由转发的问题</a>
+                    <a href="/2019/10/09/go-yu-yan-zhong-de-biao-shi-fu-ke-jian-xing/" class="b-link-green">Go语言中的标识符可见性</a>
                 </p>
             </div>
         </div>
@@ -570,7 +612,7 @@ exchange<span class="token punctuation">.</span><span class="token function">get
         repo: 'jptangchina.github.io',
         owner: 'jptangchina',
         admin: ["jptangchina"],
-        id: '2019-09-20T08-51-30',
+        id: '2019-10-09T08-54-54',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -593,7 +635,8 @@ exchange<span class="token punctuation">.</span><span class="token function">get
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2019/10/09/go-yu-yan-zhong-de-biao-shi-fu-ke-jian-xing/">
                     <div class="card-image">
@@ -608,9 +651,9 @@ exchange<span class="token punctuation">.</span><span class="token function">get
                     <div class="summary">Go语言中的标识符可见性Go语言中变量首字母大写，代表其对其他包可见，反之代表不可见。具体到实际使用中，有如下一些体现。
 1. 同包的可见性同一个包内代码的标识符始终具有可见性。例如在main包下面有两个go文件，分别为computer.g</div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-10-09
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-10-09
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
@@ -623,6 +666,7 @@ exchange<span class="token punctuation">.</span><span class="token function">get
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -641,21 +685,23 @@ exchange<span class="token punctuation">.</span><span class="token function">get
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/09/05/guo-nei-huan-jing-ben-di-da-jian-minikube/">
+                <a href="/2019/09/20/ji-yi-ci-sheng-ji-springcloud-gateway-lu-you-zhuan-fa-de-wen-ti/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="国内环境本地搭建Minikube">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="记一次升级SpringCloud Gateway路由转发的问题">
                         
-                        <span class="card-title">国内环境本地搭建Minikube</span>
+                        <span class="card-title">记一次升级SpringCloud Gateway路由转发的问题</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
-                    <div class="summary">说明本文中Minikube版本为v1.3.1，Docker版本为19.03.1，VirtualBox版本为6.0.8 r130520 (Qt5.6.3)。
-本文主要说明如何解决拉取镜像失败的问题，至于其他安装步骤，官方教程已经说明的非常详细</div>
+                    <div class="summary">说明本文中使用的SpringBoot版本：2.1.7.RELEASE，SpringCloud依赖版本：Greenwich.SR3。
+问题描述在配置一个简单的路由转发时，同样的配置，转发到了不同的路径。配置如下：
+spring:
+  clou</div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-05
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-20
                             </span>
                         <span class="publish-author">
                             
@@ -672,12 +718,12 @@ exchange<span class="token punctuation">.</span><span class="token function">get
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Minikube/" target="_blank">
-                        <span class="chip bg-color">Minikube</span>
+                    <a href="/tags/SpringCloud/" target="_blank">
+                        <span class="chip bg-color">SpringCloud</span>
                     </a>
                     
-                    <a href="/tags/Kubernetes/" target="_blank">
-                        <span class="chip bg-color">Kubernetes</span>
+                    <a href="/tags/Gateway/" target="_blank">
+                        <span class="chip bg-color">Gateway</span>
                     </a>
                     
                 </div>
