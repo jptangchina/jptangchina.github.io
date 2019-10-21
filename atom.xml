@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.jptangchina.com/"/>
-  <updated>2019-10-09T00:54:54.000Z</updated>
+  <updated>2019-10-17T12:59:39.000Z</updated>
   <id>http://www.jptangchina.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>log4g：站在巨人的头上实现一个可配置的Go日志库</title>
+    <link href="http://www.jptangchina.com/2019/10/17/log4g-zhan-zai-ju-ren-de-tou-shang-shi-xian-yi-ge-ke-pei-zhi-de-go-ri-zhi-ku/"/>
+    <id>http://www.jptangchina.com/2019/10/17/log4g-zhan-zai-ju-ren-de-tou-shang-shi-xian-yi-ge-ke-pei-zhi-de-go-ri-zhi-ku/</id>
+    <published>2019-10-17T12:59:39.000Z</published>
+    <updated>2019-10-17T12:59:39.000Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="Golang" scheme="http://www.jptangchina.com/categories/Golang/"/>
+    
+    
+      <category term="Go" scheme="http://www.jptangchina.com/tags/Go/"/>
+    
+      <category term="log4g" scheme="http://www.jptangchina.com/tags/log4g/"/>
+    
+  </entry>
   
   <entry>
     <title>Go语言中的标识符可见性</title>

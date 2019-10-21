@@ -246,8 +246,8 @@
 <script>
 // 每天切换 banner 图.  Switch banner image every day.
 //$('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay() + '.jpg)');
-var imageHosting = "https://s2.ax1x.com/2019/05/12/EhDEt0.jpg,https://s2.ax1x.com/2019/05/12/EhDAkq.jpg,https://s2.ax1x.com/2019/05/12/EhDF7n.jpg,https://s2.ax1x.com/2019/05/12/EhDi0s.jpg,https://s2.ax1x.com/2019/05/12/EhD9XQ.jpg,https://s2.ax1x.com/2019/05/12/EhDp6g.jpg,https://s2.ax1x.com/2019/05/12/EhBvff.jpg".split(",");
-$('.bg-cover').css('background-image', 'url(' + imageHosting[new Date().getDay()] + ')');
+$('.bg-cover').css('background-image', 'url(https://open.saintic.com/api/bingPic?picSize=2)');
+
 </script>
 
             <div class="cover-btns">
@@ -376,6 +376,57 @@ $(function () {
     <!-- 所有文章卡片 -->
     <article id="articles" class="container articles">
         <div class="row article-row">
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2019/10/17/log4g-zhan-zai-ju-ren-de-tou-shang-shi-xian-yi-ge-ke-pei-zhi-de-go-ri-zhi-ku/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="log4g：站在巨人的头上实现一个可配置的Go日志库">
+                            
+                            <span class="card-title">log4g：站在巨人的头上实现一个可配置的Go日志库</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary">
+                            
+                                前言本人Java程序员一枚，眼看着这几年Go的势头不错，本着技多不压身的原则，也随大流慢慢学习。不得不说Go其实跟Java差别还是挺大的，毕
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-10-17
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fa fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/Golang/" class="post-category" target="_blank">
+                                    Golang
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/Go/" target="_blank">
+                            <span class="chip bg-color">Go</span>
+                        </a>
+                        
+                        <a href="/tags/log4g/" target="_blank">
+                            <span class="chip bg-color">log4g</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
